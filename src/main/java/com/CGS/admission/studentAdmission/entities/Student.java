@@ -5,14 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Student {
+
+@Table(name="F_STUDENT")
+public @Data @NoArgsConstructor @AllArgsConstructor  @ToString class Student {
     @Id
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
     @Column(name = "S_ID")
     private long studentId;
     @Column(name = "FIRST_NAME")
@@ -25,5 +29,7 @@ public class Student {
     private String city;
     @Column(name = "EMAIL")
     private String email;
+    //@OneToMany(mappedBy = "st")
+   // private List<Marks> marks=new ArrayList<Marks>();
 
 }
