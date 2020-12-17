@@ -4,11 +4,15 @@ import com.CGS.admission.studentAdmission.entities.Marks;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-
-
-
-
+@Repository
 public interface MarksRepository extends JpaRepository<Marks, Long>{
-	//public Page<Marks> findByStLastNameContains(String kw,Pageable pageable) ;
+
+	//@Query("from Marks as m WHERE m.st.lastName like :x ")
+	//public Page<Marks> search(@Param("x") String kw, Pageable pageable) ;
+    public Page<Marks> findByStLastNameContains( String kw, Pageable pageable) ;
+
 }

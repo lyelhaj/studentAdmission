@@ -12,18 +12,71 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+//@Data @AllArgsConstructor @NoArgsConstructor @ToString
 @Table(name = "F_COURSE")
 public class Course {
+
+
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "C_ID")
-    private long courseId;
+    private Long courseId;
     @Column(name = "C_NAME")
     private String courseName;
     @Column(name = "CREDIT_NUMBER")
     private long creditNumber;
-   // @OneToMany(mappedBy = "cs")
-    //private List<Marks> marks=new ArrayList<Marks>();
+    private int year;
+   @OneToMany(mappedBy = "cs", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+   private List<Marks> marks=new ArrayList<Marks>();
 
+    public Course(Long courseId, String courseName, long creditNumber, int year, List<Marks> marks) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.creditNumber = creditNumber;
+        this.year = year;
+        this.marks = marks;
+    }
+
+    public Course() {
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public long getCreditNumber() {
+        return creditNumber;
+    }
+
+    public void setCreditNumber(long creditNumber) {
+        this.creditNumber = creditNumber;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public List<Marks> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(List<Marks> marks) {
+        this.marks = marks;
+    }
 }

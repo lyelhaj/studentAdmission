@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org" >
+<head>
+<meta charset="utf-8">
+<title>Liste of students</title>
+	<link rel="stylesheet" href="../static/css/style.css"
+		  th:href=@{css/style.css}>
+<link rel="stylesheet" href="../static/css/boutstrap.min.css"
+	th:href=@{css/bootstrap.min.css}>
+
+</head>
+<body topmargin="5">
+<header class="container-fluid header">
+	<div class="container">
+		<a href="#" class="logo">Student Admission </a>
+		<nav class="menu">
+
+
+			<a th:href="@{/course}">Courses</a>
+			<a th:href="@{/marks}"/>Marks</a>
+
+		</nav>
+	</div>
+</header>
+	<div class="container"  style="margin-top:10px">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Lest of students</div>
+			<div class="panel-body">
+			<form th:action="@{/student}" method="get">
+			<label> Last name :</label>
+			<input type="text" name="kw" th:value="${kw}">
+			<button type="submit" class="btn btn-primary">Search</button>
+			</form>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<tr>
+						<th>Student ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Adresse</th>
+						<th>City</th>
+						<th>Email</th>
+						<th>Phone number</th>
+						<th>Email</th>
+					</tr>
+					<tr th:each="s:${listStudents}">
+						<td th:text="${s.studentId}"></td>
+						<td th:text="${s.firstName}"></td>
+						<td th:text="${s.lastName}"></td>
+						<td th:text="${s.adress}"></td>
+						<td th:text="${s.city}"></td>
+						<td th:text="${s.email}"></td>
+						<td th:text="${s.telephone}"></td>
+						<td th:text="${s.dateOfBirth}"></td>
+
+						<td> <a onclick="javascript:return confirm('Are you sure to delete this student?')" th:href="@{/deleteStudent(id=${s.studentId} , page=${currentPage}, kw=${kw})}"><input type="button" class="btn btn-primary" value="Delete"></a></td>
+						<td> <a th:href="@{/update(id=${s.studentId} ,fn=${s.firstName},ln=${s.lastName},ad=${s.adress},ci=${s.city},
+						 em=${s.email},gn=${s.type}, dob=${s.dateOfBirth}  )}"><input type="button" class="btn btn-primary" value="Update"></a></td>
+					</tr>
+
+					<tr>
+
+					</tr>
+				</table>
+				<table class="table" >
+					<td></td><td></td> <td></td> <td></td><td></td>	<td><a  th:href="@{/addstudent}"><input type="button" class="btn btn-primary" value="Add student"></a></td>
+				</table >
+				<ul class="nav nav-pills">
+					<li th:class="${currentPage==status.index}?'active':''"
+						th:each="pages,status:${pages}">
+						<a
+						th:href="@{/student(page=${status.index}, kw=${kw})}"
+						th:text="${status.index}"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

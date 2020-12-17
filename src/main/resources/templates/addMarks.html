@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Liste of Marks</title>
+  <link rel="stylesheet" href="../static/css/boutstrap.min.css"
+        th:href=@{css/bootstrap.min.css}>
+</head>
+<body>
+
+<div class="container" style="margin-top:10px">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Marks</div>
+
+    <div class="panel-body">
+      <form action="#" th:action="@{/saveMarks}" th:object="${marks}" method="post">
+        <table class="table">
+          <tr>
+            <th>Student ID</th>
+            <td><input type="text" th:field="*{st.studentId}"/></td>
+          </tr>
+          <tr>
+            <th>Course ID</th>
+            <td><input type="text" th:field="*{cs.courseId}"/></td>
+          </tr>
+          <tr>
+            <th>Session</th>
+            <td>
+
+              <select th:field="*{season}" value="${marks.season}" >
+                <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Semestre).values()}"
+                        th:value="${s}" th:text="${s}" ></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>Marks1</th>
+            <td><input type="text" th:field="*{marks1}"/></td>
+          </tr>
+          <tr>
+            <th>Marks2</th>
+            <td> <input type="text" th:field="*{marks2}"></td>
+          </tr>
+          <tr>
+            <td><input class="btn btn-primary" type="submit" value="Save"></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</body>
+</html>

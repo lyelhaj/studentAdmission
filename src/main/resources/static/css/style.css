@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+/*font-family: 'Raleway', sans-serif;*/
+
+.body{
+  font-family: 'Raleway', sans-serif; background-color:#eeeeee;
+}
+.panel-heading {
+     background-color: #154360 !important;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:visited{
+background-color: #78281F !important;
+}
+
+
+
+.btn-primary {
+    background-color: #154360 !important;
+}
+
+/*header*/
+.header{
+  background-color: #154360;
+  height: 70px;
+  line-height: 70px;
+  margin-top:5px;
+}
+.logo{
+  color: #ffffff;
+  text-transform:uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  float: left;
+}
+
+.menu{
+  float:right;
+}
+
+.menu a{
+  color: #ffffff;
+  margin-right: 20px;
+}
+
+.menu a:hover{
+  color: #2C3E50
+}
+/*banner*/
+.banner{
+  width: 100%;
+  max-width: 100%;
+}
+.ban{
+  width: 100%;
+  max-width: 100%;
+}
+.ban img{
+  width: 100%;
+  max-width: 100%;
+}
+.inner-banner{
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align:center;
+}
+
+.inner-banner h1{
+  color: #ffffff;
+}
+.inner-banner .btn-custom{
+  background-color: #4871DB;
+color: #ffffff;
+}
+.inner-banner .btn-custom:hover{
+  background-color: #1C264E
+}
+/*about*/
+.about {
+  text-align: center;
+}
+.about article{
+  margin-top: 10%;
+}
+.about article h2{
+  text-align: center;
+}
+.about article img{
+float: left;
+height: 180px;
+width:50%;
+}
+/*portfolio*/
+.portfolio{
+  background-color: #eeeeee;
+}
+#portfolio{
+  text-align: center;
+}
+.portfolio .item-folio{
+  height: 180px;
+  background-color: #4871DB;
+  padding: 0;
+  margin: 0;
+
+}
+
+.item-folio img{
+  height: 180px;
+  width: 100%;
+}
+
+/*contact*/
+.footer{
+    color: blue;
+background-color: #eeeeee;
+margin-bottom: 10px;
+padding-bottom: 10px;
+}
+#contact{
+  color: #ffffff;
+  text-align: center;
+}
+
+.formulaireContact{
+  width: 500px;
+  display: block;
+  margin: 0 auto;
+}
+
+a.button{
+
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #FFFFFF;
+ margin:0 0.3em 0.3em 0;
+ border-radius:0.12em;
+ box-sizing: border-box;
+ text-decoration:none;
+ font-family:'Roboto',sans-serif;
+ font-weight:300;
+ color:#FFFFFF;
+ text-align:center;
+ transition: all 0.2s;
+}
+
+/*
+.table{
+
+ background-color: #cce6ff ;
+ margin-top:100px;
+ padding: 40px;
+ align-content: center;
+
+}
+*/
+.form{
+  background-color: #ffffff;
+align-content: center;
+}
+#input{
+  margin-right:20px;
+}
+
+#contact1{
+  color: #2C3E50;
+  text-align: center;
+}

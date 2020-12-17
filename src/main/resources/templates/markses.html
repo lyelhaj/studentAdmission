@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Liste of marks</title>
+	<link rel="stylesheet" href="../static/css/style.css"
+		  th:href=@{css/style.css}>
+<link rel="stylesheet" href="../static/css/boutstrap.min.css"
+	th:href=@{css/bootstrap.min.css}>
+
+</head>
+<body>
+<header class="container-fluid header">
+	<div class="container">
+		<a href="#" class="logo">Student Admission </a>
+		<nav class="menu">
+
+
+			<a th:href="@{/course}">Courses</a>
+			<a th:href="@{/student}"/>Student</a>
+
+		</nav>
+	</div>
+</header>
+	<div class="container" style="margin-top:10px">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Lest of markses</div>
+			<div class="panel-body">
+			<form th:action="@{/marks}" method="get">
+			<label> Last Name :</label>
+			<input type="text" name="kw" th:value="${kw}">
+			<button type="submit" class="btn btn-primary">Search</button>
+			</form>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<tr>
+						<th>Student ID</th>
+						<th>Student Name</th>
+						<th> Course Name</th>
+						<th> Marks1</th>
+						<th> Marks2</th>
+						<th> Grade</th>
+						<th> Semester</th>
+					</tr>
+					<tr th:each="s:${listMarkses}">
+						<td th:text="${s.st.studentId}"></td>
+						<td th:text="${s.st.firstName}+' '+${ s.st.lastName}"></td>
+						<td th:text="${s.cs.courseName}"></td>
+						<td th:text="${s.marks1}"></td>
+						<td th:text="${s.marks2}"></td>
+						<td th:text="${s.grade()}"></td>
+						<td th:text="${s.season}"></td>
+						<td> <a onclick="javascript:return confirm('Are you sure to delete this marks?')" th:href="@{/deleteMarks(id=${s.marksId} , page=${currentPage}, kw=${kw})}">Delete</a></td>
+						<td> <a th:href="@{/updateMarks(id=${s.marksId} ,sId=${s.st.studentId},cId=${s.cs.courseId},season=${s.season},
+						m1=${s.marks1}, m2=${s.marks2} )}">update</a></td>
+					</tr>
+				</table>
+				<table class="table" >
+					<td></td><td></td> <td></td> <td></td><td></td>	<td><a  th:href="@{/addmarks}"><input type="button" class="btn btn-primary" value="Add marks"></a></td>
+				</table >
+				<ul class="nav nav-pills">
+					<li th:class="${currentPage==status.index}?'active':''"
+						th:each="pages,status:${pages}"><a
+						th:href="@{/marks(page=${status.index}, kw=${kw})}"
+						th:text="${status.index}"></a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

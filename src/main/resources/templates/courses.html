@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Liste of courses</title>
+	<link rel="stylesheet" href="../static/css/style.css"
+		  th:href=@{css/style.css}>
+<link rel="stylesheet" href="../static/css/boutstrap.min.css"
+	th:href=@{css/bootstrap.min.css}>
+</head>
+<body>
+<header class="container-fluid header">
+	<div class="container">
+		<a href="#" class="logo">Student Admission </a>
+		<nav class="menu">
+
+
+			<a th:href="@{/student}">Student</a>
+			<a th:href="@{/marks}"/>Marks</a>
+
+		</nav>
+	</div>
+</header>
+	<div class="container" style="margin-top:10px">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Lest of courses</div>
+			<div class="panel-body">
+			<form th:action="@{/course}" method="get">
+			<label> Course Name :</label>
+			<input type="text" name="keyWord" th:value="${keyWord}">
+			<button type="submit" class="btn btn-primary">Search</button>
+			</form>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<tr>
+						<th>Course ID</th>
+						<th>First Name</th>
+						<th>Credit Number</th>
+						
+					</tr>
+					<tr th:each="s:${listCourses}">
+						<td th:text="${s.courseId}"></td>
+						<td th:text="${s.courseName}"></td>
+						<td th:text="${s.creditNumber}"></td>
+						<td> <a onclick="javascript:return confirm('Are you sure to delete this course?')" th:href="@{/deleteCourse(id=${s.courseId} , page=${currentPage}, keyWord=${keyWord})}">Delete</a></td>
+						<td> <a th:href="@{/updateCourse(id=${s.courseId} ,name=${s.courseName},cr=${s.creditNumber})}">update</a></td>
+					</tr>
+					</tr>
+
+				</table>
+
+				<table class="table" >
+					<td></td><td></td> <td></td> <td></td><td></td>	<td><a  th:href="@{/addcourse}"><input type="button" class="btn btn-primary" value="Add course"></a></td>
+				</table >
+
+				<ul class="nav nav-pills">
+					<li th:class="${currentPage==status.index}?'active':''"
+						th:each="pages,status:${pages}"><a
+						th:href="@{/course(page=${status.index}, keyWord=${keyWord})}"
+						th:text="${status.index}"></a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
