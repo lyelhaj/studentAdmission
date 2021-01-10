@@ -1,12 +1,13 @@
 package com.CGS.admission.studentAdmission.controller;
 
-import com.CGS.admission.studentAdmission.entities.Gender;
-import com.CGS.admission.studentAdmission.entities.Marks;
-import com.CGS.admission.studentAdmission.entities.Semestre;
-import com.CGS.admission.studentAdmission.entities.Student;
+import com.CGS.admission.studentAdmission.entities.*;
 import com.CGS.admission.studentAdmission.repositories.CourseRepository;
 import com.CGS.admission.studentAdmission.repositories.MarksRepository;
 import com.CGS.admission.studentAdmission.repositories.StudentRepository;
+import com.CGS.admission.studentAdmission.service.CourseService;
+import com.CGS.admission.studentAdmission.service.EmailServiceImpl;
+import com.CGS.admission.studentAdmission.service.MarksService;
+import com.CGS.admission.studentAdmission.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,19 +23,22 @@ import java.util.List;
 
 @Controller
 public class MarksController {
-	@Autowired
-	private MarksRepository marksRepository;
-	@Autowired
-	private StudentRepository studentRepository;
-	@Autowired
-	private CourseRepository courseRepository;
 
+	@Autowired
+	private MarksService marksService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private CourseService courseService;
+
+	@Autowired
+	private EmailServiceImpl emailServiceImp;
 	//@RequestMapping(value="/index", method=RequestMethod.GET)
 	@GetMapping("/marks")
 	public String marks(Model md,@RequestParam(name="page", defaultValue="0") int page,
 						@RequestParam(name="kw", defaultValue="")  String kw) {
 
-		Page<Marks> markses=marksRepository.findByStLastNameContains(kw,PageRequest.of(page, 10));
+		Page<Marks> markses=marksService.getByLastName(kw,PageRequest.of(page, 10));
 		md.addAttribute("listMarkses", markses.getContent());
 		md.addAttribute("pages", new int [markses.getTotalPages()]);
 		md.addAttribute("currentPage", page);
@@ -45,7 +49,7 @@ public class MarksController {
 	}
 	@GetMapping("/deleteMarks")
 	public String delete(long id, int page, String kw) {
-		marksRepository.deleteById(id);
+		marksService.deleteMarks(id);
 		
 		return "redirect:/marks?page="+page+"&kw="+kw;
 	}
@@ -62,7 +66,7 @@ public class MarksController {
 
 	@GetMapping("/updateMarks")
 	public String update(Model md, @RequestParam(name="id") Long id) {
-		Marks marks=marksRepository.findById(id).get();
+		Marks marks=marksService.getMarks(id);
 		md.addAttribute("marks",  marks);
 
 		return "mupdate";
@@ -70,8 +74,14 @@ public class MarksController {
 
 	@PostMapping("/saveMarks")
 	public String save(@ModelAttribute("marks") Marks marks, String kw){
-		marksRepository.save(marks);
+		marksService.addMarks(marks);
 		kw="";
+		Student student=studentService.getStudent(marks.getSt().getStudentId());
+		Course course=courseService.getCourse(marks.getCs().getCourseId());
+
+		emailServiceImp.send(student.getEmail(),"Marks",
+				"Dear "+student.getLastName()+",\n Your final result for "+course.getCourseName()+" Marks "+marks.avarege()+" Grade : "+marks.grade()
+		+" \n Cardially.");
 		return "redirect:/marks?kw="+kw;
 
 	}

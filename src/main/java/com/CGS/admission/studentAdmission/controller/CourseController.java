@@ -4,6 +4,7 @@ import com.CGS.admission.studentAdmission.entities.Course;
 import com.CGS.admission.studentAdmission.entities.Gender;
 import com.CGS.admission.studentAdmission.entities.Student;
 import com.CGS.admission.studentAdmission.repositories.CourseRepository;
+import com.CGS.admission.studentAdmission.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CourseController {
 	@Autowired
-	private CourseRepository courseRepository;
+	private CourseService courseService;
 
 	//@RequestMapping(value="/index", method=RequestMethod.GET)
 	@GetMapping("/course")
 	public String course(Model md,@RequestParam(name="page", defaultValue="0") int page,
 			@RequestParam(name="keyWord", defaultValue="") String kw) {
-		Page<Course> courses=courseRepository.findByCourseNameContains(kw,PageRequest.of(page, 10));
+		Page<Course> courses=courseService.getByName(kw,PageRequest.of(page, 10));
 		md.addAttribute("listCourses", courses.getContent());
 		md.addAttribute("pages", new int [courses.getTotalPages()]);
 		md.addAttribute("currentPage", page);
@@ -47,14 +48,14 @@ public class CourseController {
 
 	@GetMapping("/deleteCourse")
 	public String delete(long id, int page, String keyWord) {
-	courseRepository.deleteById(id);
+	courseService.deleteCourse(id);
 		
 		return "redirect:/course?page="+page+"&keyWord="+keyWord;
 	}
 
 	@GetMapping("/updateCourse")
 	public String update(Model md, @RequestParam(name="id") Long id) {
-		Course cs=courseRepository.findById(id).get();
+		Course cs=courseService.getCourse(id);
 		md.addAttribute("course",  cs);
 
 		return "cupdate";
@@ -63,7 +64,7 @@ public class CourseController {
 
 	@PostMapping("/saveCourse")
 	public String save(@ModelAttribute("course") Course course, String kw){
-		courseRepository.save(course);
+		courseService.addCourse(course);
 		return "redirect:/course?kw="+kw;
 
 	}

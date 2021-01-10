@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <title>Liste of students</title>
+    <link rel="stylesheet" href="../static/css/style.css"
+          th:href=@{css/style.css}>
+    <link rel="stylesheet" href="../static/css/boutstrap.min.css"
+          th:href=@{css/bootstrap.min.css}>
+
+</head>
+<div>
+<header class="container-fluid header">
+    <div class="container">
+        <a href="#" class="logo">Student Admission </a>
+    </div>
+</header>
+</div>
+
+<div class="panel-body">
+
+    <div class="container mt-5">
+        <div class="col-md-6 col-md-offset-3">
+<div class="card">
+    <div class="card-header"> Authentifacation</div>
+    <div class="card-bady">
+        <div th:if="${param.error}" class="text-danger">Bad credential</div>
+    <form th:action="@{login}" method="post">
+        <div class="form-group">
+            <label class="control-label">Username: </label>
+            <input type="text" name="username">
+        </div>
+        <div class="form-group">
+            <label class="control-label">Password: </label>
+            <input type="text" name="password">
+            <button class="btn btn-primary">Login</button>
+            <a th:href="@{/register}"><input type="button" class="btn btn-primary" value="Sign In"></a>
+
+
+        </div>
+    </form>
+        </div>
+    </div>
+        </div>
+</div>
+</div>
+</div>
+</body>
+</html>

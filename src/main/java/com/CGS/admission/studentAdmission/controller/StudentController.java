@@ -6,6 +6,9 @@ package com.CGS.admission.studentAdmission.controller;
 import com.CGS.admission.studentAdmission.entities.Gender;
 import com.CGS.admission.studentAdmission.entities.Student;
 import com.CGS.admission.studentAdmission.repositories.StudentRepository;
+import com.CGS.admission.studentAdmission.service.EmailService;
+import com.CGS.admission.studentAdmission.service.EmailServiceImpl;
+import com.CGS.admission.studentAdmission.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,13 +22,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class StudentController {
 	@Autowired
-	private StudentRepository studentRepository;
+	private StudentService studentService;
+	@Autowired
+    private EmailServiceImpl emailServiceImp;
 
 	//@RequestMapping(value="/index", method=RequestMethod.GET)
 	@GetMapping("/student")
 	public String getStudents(Model md,@RequestParam(name="page", defaultValue="0") int page,
 						@RequestParam(name="kw", defaultValue = "") String ln) {
-		Page<Student> students=studentRepository.findByLastNameContains(ln,PageRequest.of(page, 10));
+		Page<Student> students=studentService.getByLastName(ln,PageRequest.of(page, 10));
 		md.addAttribute("listStudents", students.getContent());
 		md.addAttribute("pages", new int [students.getTotalPages()]);
 		md.addAttribute("currentPage", page);
@@ -36,14 +41,14 @@ public class StudentController {
 	}
 	@GetMapping("/deleteStudent")
 	public String delete(long id, int page,String kw) {
-		studentRepository.deleteById(id);
+		studentService.deletStudent(id);
 
 		return "redirect:/student?page="+page+"&kw="+kw;
 	}
 
 	@GetMapping("/update")
 	public String update(Model md, @RequestParam(name="id") Long id) {
-		Student st=studentRepository.findById(id).get();
+		Student st=studentService.getStudent(id);
 md.addAttribute("student",  st);
 
 return "supdate";
@@ -61,9 +66,13 @@ md.addAttribute(student);
 	}
 
 	@PostMapping("/save")
-public String save(@ModelAttribute("student") Student student, String kw){
-		studentRepository.save(student);
+public String save(@ModelAttribute("student") Student student, String kw,@RequestParam String email){
+		studentService.addStudent(student);
+
+		emailServiceImp.send(email,"Admission", "This is for testing");
 		return "redirect:/student?sId="+kw;
+
+
 
 	}
 
