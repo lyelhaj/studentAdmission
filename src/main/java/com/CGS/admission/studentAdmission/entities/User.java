@@ -3,41 +3,45 @@ package com.CGS.admission.studentAdmission.entities;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="F_USERS")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USER_ID")
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    @Column(name = "username")
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false,length = 25)
+    private String firstName;
+    @Column(nullable = false,length = 25)
+    private String lastName;
+    @Column(nullable = false,length = 255)
     private String password;
     private boolean enabled;
 
-    @ManyToMany
+    @ManyToMany(cascade =CascadeType.ALL, fetch =FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
+                    name = "user_id", referencedColumnName = "USER_ID"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    public User() {
-    }
-
-    public User(Long id, String firstName, String lastName, String email, String password, boolean enabled, Collection<Role> roles) {
-        this.id = id;
+    public User(String email, String firstName, String lastName, String password, boolean enabled, Collection<Role> roles) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
+    }
+
+    public User() {
     }
 
     public Long getId() {
@@ -46,6 +50,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -64,14 +76,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -87,8 +91,6 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-
 
     public Collection<Role> getRoles() {
         return roles;

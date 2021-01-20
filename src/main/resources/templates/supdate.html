@@ -5,11 +5,15 @@
     <title>Liste of students</title>
     <link rel="stylesheet" href="../static/css/style.css"
           th:href=@{css/style.css}>
+    <link rel="stylesheet" href="../static/css/sidbarstyle.css"
+          th:href=@{css/sidbarstyle.css}>
     <link rel="stylesheet" href="../static/css/boutstrap.min.css"
           th:href=@{css/bootstrap.min.css}>
 
 </head>
 <body topmargin="5">
+
+
 <header class="container-fluid header">
     <div class="container">
         <a href="#" class="logo">Student Admission </a>
@@ -23,64 +27,88 @@
     </div>
 </header>
 
+<div class="sidebar">
+    <a class="active" href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+</div>
+
+<div class="content">
+
 <div class="container" style="margin-top:10px">
     <div class="panel panel-primary">
-        <div class="panel-heading">List of students</div>
+        <div class="panel-heading">Update students</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
 
         <div class="panel-body">
         <form action="#" th:action="@{/save}" th:object="${student}" method="post">
-            <table class="table">
-        <tr>
-            <th>Student ID</th>
-            <td><input th:field="*{studentId}" readonly></td>
-        </tr>
-        <tr>
-            <th>First Name</th>
-            <td><input type="text" th:field="*{firstName}"/></td>
-        </tr>
-                <tr>
-            <th>Last Name</th>
-            <td><input type="text" th:field="*{lastName}"/></td>
-        </tr>
-        <tr>
-            <th>Adresse</th>
-            <td><input type="text" th:field="*{adress}"/></td>
-        </tr>
-                <tr>
-            <th>City</th>
-            <td><input type="text" th:field="*{city}"/></td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td> <input type="text" th:field="*{email}"></td>
-        </tr>
-                <tr>
-                    <th>Phone number</th>
-                    <td> <input type="text" th:field="*{telephone}"></td>
-                </tr>
 
-        <tr>
-            <th>Gender</th>
-            <td>
-                <select th:field="*{type}" value="${student.type}" >
+
+                <div class="form-group">
+                    <label class="control-label" for="id"> Student ID </label>
+                    <input id="id" class="form-control" th:field="*{studentId}" readonly autofocus="autofocus" required>
+                </div>
+            <div class="form-group">
+                <label class="control-label" for="firstName"> First Name </label>
+                <input id="firstName" class="form-control" th:field="*{firstName}"  autofocus="autofocus" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="lastName"> First Name </label>
+                <input id="lastName" class="form-control" th:field="*{lastName}"  autofocus="autofocus" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="address"> Address </label>
+                <input id="address" class="form-control" th:field="*{lastName}"  autofocus="autofocus" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="city"> City </label>
+                <input id="city" class="form-control" th:field="*{city}"  autofocus="autofocus" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="email"> Email </label>
+                <input type="email" id="email" class="form-control" th:field="*{email}"  autofocus="autofocus" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="tel"> Phone number </label>
+                <input type="tel" id="tel" class="form-control" th:field="*{telephone}"  autofocus="autofocus" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="gender"> Gender </label>
+                <select id="gender" th:field="*{type}" value="${student.type}" >
                     <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Gender).values()}"
                             th:value="${s}" th:text="${s}" ></option>
-                </select></td>
-        </tr>
-        <tr>
-            <th>Date of birth</th>
-            <td> <input    th:field="*{dateOfBirth}"></td>
-        </tr>
-                <tr>
-                    <td><input class="btn btn-primary" type="submit" value="Update"></td>
-                </tr>
-        </table>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="dob"> Date of births </label>
+                <input type="date" id="dob" class="form-control" th:field="*{dateOfBirth}"  autofocus="autofocus" required>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-success" type="submit" value="Update">
+            </div>
+
+
+
         </form>
         </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>
 
+</div>
 </div>
 </body>
 </html>

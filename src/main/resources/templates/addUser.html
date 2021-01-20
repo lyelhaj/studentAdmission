@@ -37,7 +37,7 @@
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td><input type="text" th:field="*{email}"/></td>
+                        <td><input type="text" th:field="*{username}"/></td>
                     </tr>
                     <tr>
                         <th>Password</th>
@@ -49,6 +49,16 @@
                         <td>
                            <input type="checkbox" th:field="*{Enabled}">
                         </td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                    <tr>
+                        <th>Gender</th>
+                        <td>
+                            <select name="role">
+                                <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.RoleType).values()}"
+                                        th:value="${s}" th:text="${s}"></option>
+                            </select></td>
                     </tr>
 
                     <tr>

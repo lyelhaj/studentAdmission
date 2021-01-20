@@ -43,8 +43,8 @@
 						<td th:text="${s.courseId}"></td>
 						<td th:text="${s.courseName}"></td>
 						<td th:text="${s.creditNumber}"></td>
-						<td> <a onclick="javascript:return confirm('Are you sure to delete this course?')" th:href="@{/deleteCourse(id=${s.courseId} , page=${currentPage}, keyWord=${keyWord})}">Delete</a></td>
-						<td> <a th:href="@{/updateCourse(id=${s.courseId} ,name=${s.courseName},cr=${s.creditNumber})}">update</a></td>
+						<td> <a onclick="javascript:return confirm('Are you sure to delete this course?')" th:href="@{/deleteCourse(id=${s.courseId} , page=${currentPage}, keyWord=${keyWord})}"><input type="button" class="btn btn-primary" value="Delete"></a></td>
+						<td> <a th:href="@{/updateCourse(id=${s.courseId} ,name=${s.courseName},cr=${s.creditNumber})}"><input type="button" class="btn btn-primary" value="Update"></a></td>
 					</tr>
 					</tr>
 

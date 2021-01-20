@@ -30,7 +30,7 @@ public class StudentController {
 	@GetMapping("/student")
 	public String getStudents(Model md,@RequestParam(name="page", defaultValue="0") int page,
 						@RequestParam(name="kw", defaultValue = "") String ln) {
-		Page<Student> students=studentService.getByLastName(ln,PageRequest.of(page, 10));
+		Page<Student> students=studentService.getByLastName(ln,PageRequest.of(page, 5));
 		md.addAttribute("listStudents", students.getContent());
 		md.addAttribute("pages", new int [students.getTotalPages()]);
 		md.addAttribute("currentPage", page);

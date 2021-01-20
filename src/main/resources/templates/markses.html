@@ -51,9 +51,9 @@
 						<td th:text="${s.marks2}"></td>
 						<td th:text="${s.grade()}"></td>
 						<td th:text="${s.season}"></td>
-						<td> <a onclick="javascript:return confirm('Are you sure to delete this marks?')" th:href="@{/deleteMarks(id=${s.marksId} , page=${currentPage}, kw=${kw})}">Delete</a></td>
+						<td> <a onclick="javascript:return confirm('Are you sure to delete this marks?')" th:href="@{/deleteMarks(id=${s.marksId} , page=${currentPage}, kw=${kw})}"><input type="button" class="btn btn-primary" value="Delete"></a></td>
 						<td> <a th:href="@{/updateMarks(id=${s.marksId} ,sId=${s.st.studentId},cId=${s.cs.courseId},season=${s.season},
-						m1=${s.marks1}, m2=${s.marks2} )}">update</a></td>
+						m1=${s.marks1}, m2=${s.marks2} )}"><input type="button" class="btn btn-primary" value="Update"></a></td>
 					</tr>
 				</table>
 				<table class="table" >
