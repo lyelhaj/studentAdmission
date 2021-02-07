@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <title>Liste of students</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href=@{css/style.css}>
+    <link rel="stylesheet" href="../static/css/sidebar.css" th:href=@{css/sidebar.css}>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body class="body">
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">MCGS</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
+
+            <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"  > <span sec:authentication="principal.firstName"></span></span></span></a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+        </ul>
+
+    </div>
+</nav>
+<br>
+<div class="sidebar">
+    <a class="active" href="/">Home</a>
+    <a th:href="@{/student}">Students</a>
+    <a th:href="@{/course}">Courses</a>
+    <a th:href="@{/marks}">Markses</a>
+    <a th:href="@{/teacher}" >Teachers</a>
+    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
+
+</div>
+
+<div class="content">
+
+    <div class="panel panel-success">
+        <div class="panel heading">Teacher</div>
+
+        <div class="panel-body">
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Profile</a></li>
+                <li><a data-toggle="tab" href="#menu1">Courses</a></li>
+                <li><a data-toggle="tab" href="#menu2">Grading</a></li>
+                <li><a data-toggle="tab" href="#menu3">Payment</a></li>
+            </ul>
+
+            <div class="tab-content">
+
+
+
+
+                <div id="home" class="tab-pane fade in active">
+
+                    <div class="col-xs-3">
+                        <label class="control-label" for="id"> Teacher ID :</label>
+                        <span class="form-control" id="id"  th:text="*{teacher.id}"  ></span>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <label class="control-label" for="firstName"> First Name </label>
+                        <span class="form-control" id="firstName"  th:text="*{teacher.firstName}"  ></span>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <label class="control-label" for="lastName"> Last Name </label>
+                        <span  class="form-control" id="lastName" th:text="*{teacher.lastName}" ></span>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label class="control-label" for="address"> Address </label>
+                        <span id="address" class="form-control" th:text="*{teacher.address}" ></span>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <label class="control-label" for="city"> City </label>
+                        <span id="city" class="form-control" th:text="*{teacher.city}" ></span>
+                    </div>
+                    <br/>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="country"> Country </label>
+                        <span type="tel" id="country" class="form-control" th:text="*{teacher.country}" ></span>
+
+                    </div>
+
+                    <div class="col-xs-3">
+                        <label class="control-label" for="tel"> Phone number </label>
+                        <span type="tel" id="tel" class="form-control" th:text="*{teacher.phoneNumber}" ></span>
+
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="salary"> Salary </label>
+                        <span type="tel" id="salary" class="form-control" th:text="*{teacher.country}" ></span>
+
+                    </div>
+
+                    <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+                        <a th:href="@{/update(id=${teacher.id})}"><input type="button" class="form-control btn btn-primary" value="Edit teacher"></span></a>
+                    </div>
+
+                </div>
+                <div id="menu1" class="tab-pane fade">
+
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead class="thead">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Credits</th>
+                                <th scope="col">Year</th>
+                                <th></th>
+
+                            </tr>
+                            </thead>
+
+                            <tr th:each="s:${courseList}">
+                                <td th:text="${s.courseId}" > </td>
+                                <td th:text="${s.courseName}" > </td>
+                                <td th:text="${s.creditNumber}" > </td>
+                                <td th:text="${s.year}" > </td>
+
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+                        <a th:href="@{/update(id=${teacher.id})}"><input type="button" class="form-control btn btn-primary" value="Edit teacher"></span></a>
+                    </div>
+
+
+                </div>
+
+
+                <div id="menu2" class="tab-pane fade">
+
+                    <div class="panel-body">
+                    <form action="#" th:action="@{/tsave}" th:object="${marks}" method="post">
+
+
+                        <div class="col-xs-6">
+                            <select  class="form-control" name="sId" required>
+                                <option value="default"></option>
+                                <option th:each="c:${studentList}" th:value="${c.studentId}"th:text="${c.studentId}"/>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <select  class="form-control" name="cId" required>
+                                <option value="default"></option>
+                                <option th:each="c:${courseList}" th:value="${c.courseId}"th:text="${c.courseId}"/>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <input class="form-control"  th:field="*{marks1}" required>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <input class="form-control"  th:field="*{marks2}" required>
+                        </div>
+
+                        <div class="col-xs-6">
+                        <select th:field="*{season}" value="${marks.season}" >
+                            <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Semestre).values()}"
+                                    th:value="${s}" th:text="${s}" ></option>
+                        </select>
+                        </div>
+
+                    </form>
+                    </div>
+                </div>
+                <div id="menu3" class="tab-pane fade">
+                    <div class="col-xs-12">
+                        <select th:field="*{courseList}" class="form-control">
+                            <option value="default">Select a course</option>
+                            <option th:each="c:${courseList}" th:value="${c.courseName}"th:text="${c.courseName}"/>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

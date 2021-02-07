@@ -3,24 +3,33 @@ package com.CGS.admission.studentAdmission.controller;
 
 //import java.util.List;
 
+import com.CGS.admission.studentAdmission.entities.Course;
 import com.CGS.admission.studentAdmission.entities.Gender;
+import com.CGS.admission.studentAdmission.entities.Marks;
 import com.CGS.admission.studentAdmission.entities.Student;
+import com.CGS.admission.studentAdmission.repositories.CourseRepository;
+import com.CGS.admission.studentAdmission.repositories.MarksRepository;
 import com.CGS.admission.studentAdmission.repositories.StudentRepository;
-import com.CGS.admission.studentAdmission.service.EmailService;
-import com.CGS.admission.studentAdmission.service.EmailServiceImpl;
-import com.CGS.admission.studentAdmission.service.StudentService;
+import com.CGS.admission.studentAdmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
 public class StudentController {
+	@Autowired
+	MarksService marksService;
+	@Autowired
+	CourseService courseService;
 	@Autowired
 	private StudentService studentService;
 	@Autowired
@@ -63,6 +72,17 @@ md.addAttribute(student);
 
 		return "addStudent";
 		//return "redirect:/index?page="+page+"&keyWord="+keyWord;
+	}
+
+	@GetMapping("/viewStudent")
+	public String viewStudent(Model model,@RequestParam Long id,@RequestParam(name="page", defaultValue="0") int page){
+		List<Course> courses=courseService.getAll();
+		List<Marks> marksList=marksService.getByStudentId(id);
+		Student student=studentService.getStudent(id);
+		model.addAttribute(student);
+		model.addAttribute("coursesList",courses);
+		model.addAttribute("marksList",marksList);
+		return "viewstudent";
 	}
 
 	@PostMapping("/save")

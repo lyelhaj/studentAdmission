@@ -37,4 +37,8 @@ public class CourseService {
      public Page<Course> getByName(String name, Pageable pageable){
         return courseRepository.findByCourseNameContains(name,pageable);
      }
+
+     public List<Course> findCoursesByTeacher(Long id){
+        return courseRepository.findByTeacherId(id);
+     }
 }

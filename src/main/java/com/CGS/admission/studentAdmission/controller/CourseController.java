@@ -1,10 +1,9 @@
 package com.CGS.admission.studentAdmission.controller;
 
-import com.CGS.admission.studentAdmission.entities.Course;
-import com.CGS.admission.studentAdmission.entities.Gender;
-import com.CGS.admission.studentAdmission.entities.Student;
+import com.CGS.admission.studentAdmission.entities.*;
 import com.CGS.admission.studentAdmission.repositories.CourseRepository;
 import com.CGS.admission.studentAdmission.service.CourseService;
+import com.CGS.admission.studentAdmission.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,11 +14,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import java.util.List;
 
 
 @Controller
 public class CourseController {
+	@Autowired
+	private TeacherService teacherService;
 	@Autowired
 	private CourseService courseService;
 
@@ -40,7 +41,9 @@ public class CourseController {
 	@GetMapping("/addcourse")
 	public String addCourse(Model md) {
 		Course course=new Course();
+		List<Teacher> teachers=teacherService.getAll();
 		md.addAttribute(course);
+		md.addAttribute("teacherList",teachers);
 
 		return "addCourse";
 		//return "redirect:/index?page="+page+"&keyWord="+keyWord;
@@ -63,11 +66,19 @@ public class CourseController {
 	}
 
 	@PostMapping("/saveCourse")
-	public String save(@ModelAttribute("course") Course course, String kw){
+	public String save(@ModelAttribute("course") Course course, String kw,@RequestParam Long tId){
+		Teacher teacher=teacherService.getTeacher(tId);
+		course.setTeacher(teacher);
 		courseService.addCourse(course);
 		return "redirect:/course?kw="+kw;
 
 	}
 
+	@GetMapping("/viewCourse")
+	public String viewCourse(Model model,@RequestParam Long id,@RequestParam(name="page", defaultValue="0") int page){
+		Course course=courseService.getCourse(id);
+		model.addAttribute(course);
+		return "viewcourse";
+	}
 
 }

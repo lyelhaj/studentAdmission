@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8">
     <title>Liste of students</title>
-    <link rel="stylesheet" href="../static/css/style.css"
-          th:href=@{css/style.css}>
-    <link rel="stylesheet" href="../static/css/boutstrap.min.css"
-          th:href=@{css/bootstrap.min.css}>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href=@{css/style.css}>
+    <link rel="stylesheet" href="../static/css/sidebar.css" th:href=@{css/sidebar.css}>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
 </head>
-<body>
+<body class="body">
 
-<!-- create navigation bar ( header) -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
-                Login Module</a>
+            <a class="navbar-brand" href="#">MCGS</a>
         </div>
+
+        <ul class="nav navbar-nav">
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
+            <li><a href="#" > Welocome</a></li>
+            <li sec:authorize="isAuthenticated()"> <a th:href="@{/userProfile(id=principal.email)}"> <span sec:authentication="principal.firstName" ></span></a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+        </ul>
+
     </div>
 </nav>
+<br>
 
 <br>
 <br>
@@ -37,8 +43,8 @@
 
             <!-- success message -->
             <div th:if="${param.success}">
-                <div class="alert alert-info">You've successfully registered
-                    to our awesome app!</div>
+                <div class="alert alert-info">User successfully registered
+                    </div>
             </div>
 
             <h1>Registration</h1>

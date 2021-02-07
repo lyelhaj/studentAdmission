@@ -1,37 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8">
     <title>Liste of students</title>
-    <link rel="stylesheet" href="../static/css/style.css"
-          th:href=@{css/style.css}>
-    <link rel="stylesheet" href="../static/css/sidbarstyle.css"
-          th:href=@{css/sidbarstyle.css}>
-    <link rel="stylesheet" href="../static/css/boutstrap.min.css"
-          th:href=@{css/bootstrap.min.css}>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href=@{css/style.css}>
+    <link rel="stylesheet" href="../static/css/sidebar.css" th:href=@{css/sidebar.css}>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
 
 </head>
-<body topmargin="5">
+<body class="body">
 
-
-<header class="container-fluid header">
+<nav class="navbar navbar-inverse">
     <div class="container">
-        <a href="#" class="logo">Student Admission </a>
-        <nav class="menu">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">MCGS</a>
+        </div>
 
+        <ul class="nav navbar-nav">
 
-            <a th:href="@{/course}">Courses</a>
-            <a th:href="@{/marks}"/>Marks</a>
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
 
-        </nav>
+            <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"  > <span sec:authentication="principal.firstName"></span></span></span></a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+        </ul>
+
     </div>
-</header>
+</nav>
+<br>
 
 <div class="sidebar">
-    <a class="active" href="#home">Home</a>
-    <a href="#news">News</a>
-    <a href="#contact">Contact</a>
-    <a href="#about">About</a>
+    <a class="active" href="/">Home</a>
+    <a th:href="@{/student}">Students</a>
+    <a th:href="@{/course}">Courses</a>
+    <a th:href="@{/marks}">Markses</a>
+    <a th:href="@{/teacher}" >Teachers</a>
+    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
 </div>
 
 <div class="content">
@@ -63,7 +73,7 @@
 
             <div class="form-group">
                 <label class="control-label" for="address"> Address </label>
-                <input id="address" class="form-control" th:field="*{lastName}"  autofocus="autofocus" required>
+                <input id="address" class="form-control" th:field="*{adress}"  autofocus="autofocus" required>
             </div>
 
             <div class="form-group">

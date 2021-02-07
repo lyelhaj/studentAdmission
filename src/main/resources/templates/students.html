@@ -4,16 +4,18 @@
 <head>
     <meta charset="utf-8">
     <title>Liste of students</title>
-    <link rel="stylesheet" href="../static/css/boutstrap.min.css" th:href=@{css/bootstrap.min.css}>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/style.css" th:href=@{css/style.css}>
-    <link rel="stylesheet" href="../static/css/sidbarstyle.css" th:href=@{css/sidbarstyle.css}>
+    <link rel="stylesheet" href="../static/css/sidebar.css" th:href=@{css/sidebar.css}>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
 
 </head>
-<body>
+<body class="body">
+
 
 <nav class="navbar navbar-inverse">
     <div class="container">
@@ -25,8 +27,8 @@
 
         </ul>
         <ul class="nav navbar-nav navbar-right ">
-            <li><a href="#" > Welocome</a></li>
-            <li sec:authorize="isAuthenticated()"> <a th:href="@{/userProfile(id=principal.email)}"> <span sec:authentication="principal.firstName" ></span></a></li>
+
+            <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"  > <span sec:authentication="principal.firstName"></span></span></span></a></li>
             <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
         </ul>
@@ -35,13 +37,12 @@
 </nav>
 <br>
 <div class="sidebar">
-
-    <ul>
-    <a class="active" href="#home">Home</a>
-    <a th:href="@{/student}"/>Student</a>
+    <a class="active" href="/">Home</a>
+    <a th:href="@{/student}">Students</a>
     <a th:href="@{/course}">Courses</a>
-    <a th:href="@{/marks}"/>Marks</a>
-    </ul>
+    <a th:href="@{/marks}">Markses</a>
+    <a th:href="@{/teacher}"  >Teachers</a>
+    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
 </div>
 
 <div class="content">
@@ -57,23 +58,28 @@
             </div>
             <div class="panel-body">
                 <table class="table">
-                    <thead>
-                    <th>Student ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-
+                    <thead class="thead">
+                    <tr>
+                    <th scope="col">Student ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tr th:each="s:${listStudents}">
                         <td th:text="${s.studentId}"> </td>
                         <td th:text="${s.firstName}"></td>
                         <td th:text="${s.lastName}"></td>
 
+                        <td>   <a  th:href="@{/viewStudent(id=${s.studentId} )}"> <span class="btn-link">View</span></a></td>
+
+                        <td><a th:href="@{/update(id=${s.studentId})}"><span class="glyphicon glyphicon-pencil" aria-hidden="false"></span></a></td>
 
                         <td><a onclick="javascript:return confirm('Are you sure to delete this student?')"
-                               th:href="@{/deleteStudent(id=${s.studentId} , page=${currentPage}, kw=${kw})}"><input
-                                type="button" class="btn btn-warning" value="X"></a></td>
-                        <td><a th:href="@{/update(id=${s.studentId} ,fn=${s.firstName},ln=${s.lastName},ad=${s.adress},ci=${s.city},
-						 em=${s.email},gn=${s.type}, dob=${s.dateOfBirth}  )}"><span class="glyphicon glyphicon-pencil" aria-hidden="false"></span></a></td>
+                               th:href="@{/deleteStudent(id=${s.studentId} , page=${currentPage}, kw=${kw})}"> <span class="glyphicon glyphicon-remove btn-danger"></span></a></td>
+
                     </tr>
                 </table>
                 <table class="table">
@@ -82,7 +88,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><a th:href="@{/addstudent}"><input type="button" class="btn btn-success"
+                    <td><a th:href="@{/addstudent}"><input type="button" class="btn btn-primary"
                                                            value="Add student"></a>
                     </td>
                 </table>

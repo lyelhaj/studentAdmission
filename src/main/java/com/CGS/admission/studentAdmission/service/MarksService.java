@@ -39,7 +39,11 @@ public class MarksService {
         return marksRepository.findByStLastNameContains(ln,pageable);
     }
 
+public List<Marks> getByStudentId(Long id){
+        return marksRepository.findByStStudentId(id);
+}
 
-
-
+    public List<Marks> getByCourseId(Long id){
+        return marksRepository.findByCsCourseId(id);
+    }
 }

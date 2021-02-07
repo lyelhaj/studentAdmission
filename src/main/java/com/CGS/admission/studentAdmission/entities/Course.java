@@ -28,6 +28,9 @@ public class Course {
     private int year;
    @OneToMany(mappedBy = "cs", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
    private List<Marks> marks=new ArrayList<Marks>();
+   @ManyToOne
+   @JoinColumn(name="teacher_id")
+   private Teacher teacher;
 
     public Course(Long courseId, String courseName, long creditNumber, int year, List<Marks> marks) {
         this.courseId = courseId;
@@ -78,5 +81,13 @@ public class Course {
 
     public void setMarks(List<Marks> marks) {
         this.marks = marks;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

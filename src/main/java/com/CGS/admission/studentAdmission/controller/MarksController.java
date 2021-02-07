@@ -56,9 +56,13 @@ public class MarksController {
 
 	@GetMapping("/addmarks")
 	public String addStudent(Model md) {
+		List<Course> courses=courseService.getAll();
+		List<Student> students=studentService.getall();
 		Marks marks=new Marks();
 		marks.setSeason(Semestre.JANUARY);
 		md.addAttribute(marks);
+		md.addAttribute("courseList",courses);
+		md.addAttribute("studentList",students);
 
 		return "addMarks";
 		//return "redirect:/index?page="+page+"&keyWord="+keyWord;
@@ -72,8 +76,19 @@ public class MarksController {
 		return "mupdate";
 	}
 
+	@GetMapping("/viewMarks")
+	public String viewStudent(Model model,@RequestParam Long id,@RequestParam(name="page", defaultValue="0") int page){
+		Marks marks=marksService.getMarks(id);
+		model.addAttribute("marks",marks);
+		return "viewmarks";
+	}
+
 	@PostMapping("/saveMarks")
-	public String save(@ModelAttribute("marks") Marks marks, String kw){
+	public String save(@ModelAttribute("marks") Marks marks,  String kw, @RequestParam Long cId,@RequestParam Long sId){
+		Student st=studentService.getStudent(sId);
+		Course cs=courseService.getCourse(cId);
+		marks.setSt(st);
+		marks.setCs(cs);
 		marksService.addMarks(marks);
 		kw="";
 		Student student=studentService.getStudent(marks.getSt().getStudentId());

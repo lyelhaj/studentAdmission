@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <title>Liste of students</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href=@{css/style.css}>
+    <link rel="stylesheet" href="../static/css/sidebar.css" th:href=@{css/sidebar.css}>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body class="body">
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">MCGS</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
+
+            <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"  > <span sec:authentication="principal.firstName"></span></span></span></a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+        </ul>
+
+    </div>
+</nav>
+<br>
+<div class="sidebar">
+    <a class="active" href="/">Home</a>
+    <a th:href="@{/student}">Students</a>
+    <a th:href="@{/course}">Courses</a>
+    <a th:href="@{/marks}">Marks</a>
+    <a th:href="@{/teacher}" >Teachers</a>
+    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
+</div>
+
+<div class="content">
+
+    <div class="panel panel-success">
+        <div class="panel heading">Lest of teachers</div>
+        <div class="panel-body">
+            <form th:action="@{/teacher}" method="get">
+                <label> Last name :</label>
+                <input type="text" name="kw" th:value="${kw}" placeholder="Last Name">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead class="thead">
+                <tr>
+                    <th scope="col">Teacher ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tr th:each="s:${listTeachers}">
+                    <td th:text="${s.id}"> </td>
+                    <td th:text="${s.firstName}"></td>
+                    <td th:text="${s.lastName}"></td>
+
+                    <td>   <a  th:href="@{/viewTeacher(id=${s.id} )}"> <span class="btn-link">View</span></a></td>
+
+                    <td><a th:href="@{/updateteacher(id=${s.id})}"><span class="glyphicon glyphicon-pencil" aria-hidden="false"></span></a></td>
+
+                    <td><a onclick="javascript:return confirm('Are you sure to delete this student?')"
+                           th:href="@{/deleteTeacher(id=${s.id} , page=${currentPage}, kw=${kw})}"> <span class="glyphicon glyphicon-remove btn-danger"></span></a></td>
+
+                </tr>
+            </table>
+            <table class="table">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a th:href="@{/addteacher}"><input type="button" class="btn btn-primary"
+                                                       value="Add student"></a>
+                </td>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li th:class="${currentPage==status.index}?'active':''"
+                        th:each="pages,status:${pages}">
+                        <a class="page-link"
+                           th:href="@{/teacher(page=${status.index}, kw=${kw})}"
+                           th:text="${status.index}"></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -16,9 +16,9 @@ background-color: #78281F !important;
 
 
 
-.btn-primary {
+/*.btn-primary {
     background-color: #154360 !important;
-}
+}*/
 
 /*header*/
 .header{
@@ -77,54 +77,12 @@ color: #ffffff;
 .inner-banner .btn-custom:hover{
   background-color: #1C264E
 }
-/*about*/
-.about {
-  text-align: center;
-}
-.about article{
-  margin-top: 10%;
-}
-.about article h2{
-  text-align: center;
-}
-.about article img{
-float: left;
-height: 180px;
-width:50%;
-}
-/*portfolio*/
-.portfolio{
-  background-color: #eeeeee;
-}
-#portfolio{
-  text-align: center;
-}
-.portfolio .item-folio{
-  height: 180px;
-  background-color: #4871DB;
-  padding: 0;
-  margin: 0;
 
+
+.thead{
+background-color:#337ab7;
+color:white;
 }
-
-.item-folio img{
-  height: 180px;
-  width: 100%;
-}
-
-   footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-      position: fixed;
-    }
-
-.formulaireContact{
-  width: 500px;
-  display: block;
-  margin: 0 auto;
-}
-
 
 
 /*
