@@ -16,8 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 //import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,8 +87,27 @@ md.addAttribute(student);
 		return "viewstudent";
 	}
 
+	@PostMapping("/update")
+	public String update(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, String kw, @RequestParam String email){
+		if(bindingResult.hasErrors())
+		{
+			return "supdate";
+		}
+		studentService.addStudent(student);
+
+		emailServiceImp.send(email,"Admission", "This is for testing");
+		return "redirect:/student?sId="+kw;
+
+
+
+	}
+
 	@PostMapping("/save")
-public String save(@ModelAttribute("student") Student student, String kw,@RequestParam String email){
+public String save(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, String kw, @RequestParam String email){
+		if(bindingResult.hasErrors())
+		{
+			return "addStudent";
+		}
 		studentService.addStudent(student);
 
 		emailServiceImp.send(email,"Admission", "This is for testing");

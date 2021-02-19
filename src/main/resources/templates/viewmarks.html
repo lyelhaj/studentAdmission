@@ -17,14 +17,19 @@
 <body class="body">
 
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">MCGS</a>
+            <a class="navbar-brand" href="#" style="color:#F1522F">MCGS</a>
         </div>
 
         <ul class="nav navbar-nav">
-
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/student}">Students</a></li>
+            <li><a th:href="@{/course}">Courses</a></li>
+            <li><a th:href="@{/marks}">Marks</a></li>
+            <li><a th:href="@{/teacher}">Teachers</a></li>
+            <li><a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
 
@@ -36,16 +41,9 @@
     </div>
 </nav>
 <br>
-<div class="sidebar">
-    <a class="active" href="/">Home</a>
-    <a th:href="@{/student}">Students</a>
-    <a th:href="@{/course}">Courses</a>
-    <a th:href="@{/marks}">Markses</a>
-    <a th:href="@{/teacher}" sec:authorize="hasAuthority('TEACHER')">Teachers</a>
-    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
-</div>
+<br>
+<br>
 
-<div class="content">
 
     <div class="panel panel-success">
         <div class="panel heading">Lest of students</div>
@@ -96,7 +94,7 @@
 
 
                     <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                        <a th:href="@{/updateMarks(id=${marks.marksId})}"><input type="button" class="form-control btn btn-primary" value="Edit student"></span></a>
+                        <a th:href="@{/updateMarks(id=${marks.marksId})}"><input type="button" class="form-control btn btn-success" value="Edit"></span></a>
                     </div>
 
                 </div>
@@ -128,7 +126,7 @@
 
                     </div>
                     <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                        <a th:href="@{/updateCourse(id=${marks.cs.courseId})}"><input type="button" class="form-control btn btn-primary" value="Edit student"></span></a>
+                        <a th:href="@{/updateCourse(id=${marks.cs.courseId})}"><input type="button" class="form-control btn btn-success" value="Edit"></span></a>
                     </div>
 
 
@@ -171,7 +169,7 @@
 
                         </div>
                         <div class="col-xs-3">
-                            <label class="control-label" for="gender"> Phone number </label>
+                            <label class="control-label" for="gender"> Gender </label>
                             <span type="tel" id="gender" class="form-control" th:text="*{marks.st.type}" ></span>
 
                         </div>
@@ -184,6 +182,10 @@
                             <label class="control-label" for="email"> Email </label>
                             <span type="email" id="email" class="form-control" th:text="*{marks.st.email}" ></span>
 
+                        </div>
+
+                        <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+                            <a th:href="@{/update(id=${marks.st.studentId})}"><input type="button" class="form-control btn btn-success" value="Edit"></a>
                         </div>
 
                     </div>
@@ -228,12 +230,12 @@
                     </div>
                     <div class="col-xs-3">
                         <label class="control-label" for="salary"> Salary </label>
-                        <span  id="salary" class="form-control" th:text="*{marks.cs.teacher.country}" ></span>
+                        <span  id="salary" class="form-control" th:text="*{marks.cs.teacher.salary}" ></span>
 
                     </div>
 
                     <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                        <a th:href="@{/updateTeacher(id=${marks.cs.teacher.id})}"><input type="button" class="form-control btn btn-primary" value="Edit teacher"></span></a>
+                        <a th:href="@{/tupdate(id=${marks.cs.teacher.id})}"><input type="button" class="form-control btn btn-success" value="Edit"></a>
                     </div>
 
                 </div>
@@ -243,6 +245,6 @@
 
         </div>
     </div>
-</div>
+
 </body>
 </html>

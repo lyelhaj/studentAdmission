@@ -17,11 +17,20 @@
 <body class="body">
 
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">MCGS</a>
+            <a class="navbar-brand" href="#" style="color:#F1522F">MCGS</a>
         </div>
+
+        <ul class="nav navbar-nav">
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/student}">Students</a></li>
+            <li><a th:href="@{/course}">Courses</a></li>
+            <li><a th:href="@{/marks}">Marks</a></li>
+            <li><a th:href="@{/teacher}">Teachers</a></li>
+            <li><a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a></li>
+        </ul>
 
         <ul class="nav navbar-nav">
 
@@ -36,8 +45,15 @@
     </div>
 </nav>
 <br>
-<div class="sidebar">
-    <a class="active" href="/">Home</a>
+<br>
+<br>
+
+<!--<div class="sidebar">
+    <li><a class="active" href="/">Home</a>
+        <u><a href="#"></a></u>
+        <ul><a href="#">Edit</a></ul>
+        <ul><a href="#">Delete</a></ul>
+    </li>
     <a th:href="@{/student}">Students</a>
     <a th:href="@{/course}">Courses</a>
     <a th:href="@{/marks}">Markses</a>
@@ -45,7 +61,8 @@
     <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
 </div>
 
-<div class="content">
+<div class="content">-->
+
 
         <div class="panel panel-success">
             <div class="panel heading">Lest of students</div>
@@ -53,7 +70,7 @@
                 <form th:action="@{/student}" method="get">
                     <label> Last name :</label>
                     <input type="text" name="kw" th:value="${kw}" placeholder="Last Name">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-success">Search</button>
                 </form>
             </div>
             <div class="panel-body">
@@ -75,10 +92,10 @@
 
                         <td>   <a  th:href="@{/viewStudent(id=${s.studentId} )}"> <span class="btn-link">View</span></a></td>
 
-                        <td><a th:href="@{/update(id=${s.studentId})}"><span class="glyphicon glyphicon-pencil" aria-hidden="false"></span></a></td>
+                        <td><a th:href="@{/update(id=${s.studentId})}"><span class="btn-link" aria-hidden="false" sec:authorize="hasAuthority('ADMIN')">Edit</span></a></td>
 
                         <td><a onclick="javascript:return confirm('Are you sure to delete this student?')"
-                               th:href="@{/deleteStudent(id=${s.studentId} , page=${currentPage}, kw=${kw})}"> <span class="glyphicon glyphicon-remove btn-danger"></span></a></td>
+                               th:href="@{/deleteStudent(id=${s.studentId} , page=${currentPage}, kw=${kw})}" sec:authorize="hasAuthority('ADMIN')"> <span class=" btn-link">Delete</span></a></td>
 
                     </tr>
                 </table>
@@ -88,8 +105,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><a th:href="@{/addstudent}"><input type="button" class="btn btn-primary"
-                                                           value="Add student"></a>
+                    <td><a th:href="@{/addstudent}"><input type="button" class="btn btn-success"
+                                                           value="Add student" sec:authorize="hasAuthority('ADMIN')"></a>
                     </td>
                 </table>
                 <nav aria-label="Page navigation example">
@@ -116,7 +133,7 @@
                 </nav>
         </div>
 
-    </div>
+
 </div>
 </body>
 </html>

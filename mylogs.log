@@ -1,0 +1,41 @@
+WARN  18 Feb 2021 - 17:35:36.500 [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17h54m29s217ms867µs300ns).
+WARN  18 Feb 2021 - 18:35:13.854 [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m7s180ms651µs700ns).
+INFO  18 Feb 2021 - 19:20:07.563 [restartedMain] c.C.a.s.StudentAdmissionApplication - Starting StudentAdmissionApplication using Java 1.8.0_211 on DESKTOP-N5VA959 with PID 21812 (C:\Users\User\studentAdmission\target\classes started by User in C:\Users\User\studentAdmission)
+INFO  18 Feb 2021 - 19:20:07.571 [restartedMain] c.C.a.s.StudentAdmissionApplication - No active profile set, falling back to default profiles: default
+INFO  18 Feb 2021 - 19:20:07.784 [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\User\.m2\repository\com\oracle\database\jdbc\ojdbc8\19.8.0.0\ojdbc8-19.8.0.0.jar referenced one or more files that do not exist: file:/C:/Users/User/.m2/repository/com/oracle/database/jdbc/ojdbc8/19.8.0.0/oraclepki.jar
+INFO  18 Feb 2021 - 19:20:07.785 [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+INFO  18 Feb 2021 - 19:20:07.786 [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+INFO  18 Feb 2021 - 19:20:09.524 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+INFO  18 Feb 2021 - 19:20:09.737 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 195 ms. Found 6 JPA repository interfaces.
+INFO  18 Feb 2021 - 19:20:11.331 [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8088 (http)
+INFO  18 Feb 2021 - 19:20:11.359 [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+INFO  18 Feb 2021 - 19:20:11.359 [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.39]
+INFO  18 Feb 2021 - 19:20:11.681 [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+INFO  18 Feb 2021 - 19:20:11.682 [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3888 ms
+INFO  18 Feb 2021 - 19:20:12.190 [restartedMain] o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+INFO  18 Feb 2021 - 19:20:12.290 [task-1] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+WARN  18 Feb 2021 - 19:20:12.419 [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+INFO  18 Feb 2021 - 19:20:12.507 [task-1] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.23.Final
+INFO  18 Feb 2021 - 19:20:12.986 [task-1] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+INFO  18 Feb 2021 - 19:20:13.121 [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b60a5d8, org.springframework.security.web.context.SecurityContextPersistenceFilter@40c8e742, org.springframework.security.web.header.HeaderWriterFilter@6c0a82, org.springframework.security.web.csrf.CsrfFilter@4b301dfb, org.springframework.security.web.authentication.logout.LogoutFilter@3352aa4, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4035b253, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b06d11b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5ce5a33f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@556ba0c, org.springframework.security.web.session.SessionManagementFilter@e4da020, org.springframework.security.web.access.ExceptionTranslationFilter@33c0a0fa, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@34b009dc]
+INFO  18 Feb 2021 - 19:20:13.388 [task-1] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+WARN  18 Feb 2021 - 19:20:13.401 [task-1] c.z.hikari.util.DriverDataSource - Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+INFO  18 Feb 2021 - 19:20:13.678 [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+INFO  18 Feb 2021 - 19:20:14.872 [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+INFO  18 Feb 2021 - 19:20:14.962 [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8088 (http) with context path ''
+INFO  18 Feb 2021 - 19:20:14.967 [restartedMain] o.s.d.r.c.DeferredRepositoryInitializationListener - Triggering deferred initialization of Spring Data repositories…
+INFO  18 Feb 2021 - 19:20:15.036 [task-1] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+INFO  18 Feb 2021 - 19:20:15.083 [task-1] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+INFO  18 Feb 2021 - 19:20:32.280 [http-nio-8088-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+INFO  18 Feb 2021 - 19:20:32.284 [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+INFO  18 Feb 2021 - 19:20:32.297 [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 10 ms
+INFO  18 Feb 2021 - 19:20:36.072 [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+INFO  18 Feb 2021 - 19:20:36.102 [task-1] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+INFO  18 Feb 2021 - 19:20:37.328 [restartedMain] o.s.d.r.c.DeferredRepositoryInitializationListener - Spring Data repositories initialized!
+INFO  18 Feb 2021 - 19:20:37.356 [restartedMain] c.C.a.s.StudentAdmissionApplication - Started StudentAdmissionApplication in 30.707 seconds (JVM running for 31.623)
+INFO  18 Feb 2021 - 19:21:17.787 [http-nio-8088-exec-2] c.C.a.s.service.UserServiceImpl - User authenticated successfully
+INFO  18 Feb 2021 - 19:31:01.470 [http-nio-8088-exec-6] c.C.a.s.service.UserServiceImpl - User authenticated successfully
+INFO  18 Feb 2021 - 19:34:38.780 [http-nio-8088-exec-5] c.C.a.s.service.UserServiceImpl - User authenticated successfully
+ERROR 18 Feb 2021 - 19:56:58.370 [http-nio-8088-exec-3] c.C.a.s.controller.MyErrorController - error 404
+INFO  18 Feb 2021 - 19:57:39.677 [http-nio-8088-exec-3] c.C.a.s.service.UserServiceImpl - User authenticated successfully
+ERROR 18 Feb 2021 - 19:58:02.021 [http-nio-8088-exec-9] c.C.a.s.controller.MyErrorController - error 403

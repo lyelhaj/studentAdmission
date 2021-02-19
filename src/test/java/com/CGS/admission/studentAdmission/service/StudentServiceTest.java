@@ -1,25 +1,28 @@
 package com.CGS.admission.studentAdmission.service;
 
+import com.CGS.admission.studentAdmission.entities.Gender;
 import com.CGS.admission.studentAdmission.entities.Student;
 import com.CGS.admission.studentAdmission.repositories.StudentRepository;
 import com.CGS.admission.studentAdmission.testUtil.TestUtil;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class StudentServiceTest {
@@ -46,9 +49,11 @@ class StudentServiceTest {
      */
     @Test
     public void addStudentTest() {
-          studentService.addStudent(student);
-           verify(studentRepository).save(student);
-        System.out.println("Test addStudent");
+        Student st1=new  Student(id, "Ahmed", "Sidi", "45 Montreal", "Montreal", "asidi@gmail.com",Gender.MALE, null,5142261052L,null);
+        when(studentRepository.save(st1)).thenReturn(st1);
+        assertEquals(studentService.addStudent(st1),st1);
+
+
     }
 
     /**
@@ -56,10 +61,11 @@ class StudentServiceTest {
      */
     @Test
     public void testUpdateStudent() {
+        Student student=new  Student(id, "Ahmed", "Sidi", "45 Montreal", "Montreal", "asidi@gmail.com", Gender.MALE, null,5142261052L,null);
+        when(studentRepository.save(student)).thenReturn(student);
+       assertEquals( studentService.updatStudent(id,student),student);
 
-        studentService.updatStudent(id,student);
-        verify(studentRepository).save(student);
-        System.out.println("Test testUpdate");
+
     }
 
     /**
@@ -67,13 +73,9 @@ class StudentServiceTest {
      */
     @Test
     public void getStudentTest() {
-
+Student student=new  Student(id, "Ahmed", "Sidi", "45 Montreal", "Montreal", "asidi@gmail.com", Gender.MALE, null,5142261052L,null);
         when(studentRepository.findById(id)).thenReturn(Optional.of(student));
-        studentService.getStudent(id);
-        verify(studentRepository).findById(id);
-
-
-        System.out.println("Test testSelectById");
+       assertEquals(studentService.getStudent(id),student);
 
     }
 
@@ -84,7 +86,7 @@ class StudentServiceTest {
     public void testDelete() {
           studentService.deletStudent(id);
         verify(studentRepository).deleteById(id);
-        System.out.println("Test testDelete");
+
 
     }
 
@@ -92,12 +94,26 @@ class StudentServiceTest {
      * Test of select method, of class StudentServiceImpl.
      */
     @Test
-    public void testSelect() {
+    public void testGetAll() {
+        when(studentRepository.findAll()).thenReturn(Stream.of(
+               new  Student(id, "Ahmed", "Sidi", "45 Montreal", "Montreal", "asidi@gmail.com",Gender.MALE, null,5142261052L,null),
+                new  Student(2L, "dag", "aly", "45 Montreal", "Montreal", "asidi@gmail.com",Gender.MALE, null,5142261052L,null)
+       ).collect(Collectors.toList()));
+        assertEquals(studentService.getall().size(),2);
 
-        System.out.println("Test testSelect");
-        studentService.getall();
-          verify(studentRepository).findAll();
     }
 
+    @Test
+    public void getByLastNameTest(){
+        String lastName= TestUtil.generateRandomString();
+        List<Student> students=new ArrayList<>();
+        students.add( new  Student(id, "Ahmed", lastName, "45 Montreal", "Montreal", "asidi@gmail.com",Gender.MALE, null,5142261052L,null));
+        Page<Student> studentPage=new PageImpl<>(students,PageRequest.of(1,1),1);
+        when(studentRepository.findByLastNameContains(lastName,PageRequest.of(1,1))).thenReturn(studentPage);
+        assertEquals(studentService.getByLastName(lastName,PageRequest.of(1,1)).getContent(),studentPage.getContent());
+
+
+
+    }
 
 }

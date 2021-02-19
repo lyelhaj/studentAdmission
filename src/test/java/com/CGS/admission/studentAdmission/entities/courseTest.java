@@ -9,7 +9,7 @@ import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class cTest {
+public class courseTest {
 
     private Course course;
     private static Long id=100l;

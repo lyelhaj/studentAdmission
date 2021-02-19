@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +27,10 @@ public class Course {
     @Column(name = "C_NAME")
     private String courseName;
     @Column(name = "CREDIT_NUMBER")
+    @Max(8) @Min(1)
     private long creditNumber;
+    @Min(2010)
+   @Max(9999)
     private int year;
    @OneToMany(mappedBy = "cs", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
    private List<Marks> marks=new ArrayList<Marks>();

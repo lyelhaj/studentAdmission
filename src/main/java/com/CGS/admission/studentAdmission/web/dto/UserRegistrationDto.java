@@ -2,10 +2,11 @@ package com.CGS.admission.studentAdmission.web.dto;
 
 import com.CGS.admission.studentAdmission.entities.Role;
 import com.CGS.admission.studentAdmission.entities.RoleType;
+import com.CGS.admission.studentAdmission.entities.User;
 
 import java.util.Collection;
 
-public class UserRegistrationDto {
+public class UserRegistrationDto  {
 
     private String firstName;
     private String lastName;
@@ -14,7 +15,7 @@ public class UserRegistrationDto {
     private boolean enabled;
     private Collection<Role> roles;
 
-    public UserRegistrationDto(String firstName, String lastName, String email, String password,boolean enabled) {
+    public UserRegistrationDto (String firstName, String lastName, String email, String password,boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -17,14 +17,19 @@
 <body class="body">
 
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">MCGS</a>
+            <a class="navbar-brand" href="#" style="color:#F1522F">MCGS</a>
         </div>
 
         <ul class="nav navbar-nav">
-
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/student}">Students</a></li>
+            <li><a th:href="@{/course}">Courses</a></li>
+            <li><a th:href="@{/marks}">Marks</a></li>
+            <li><a th:href="@{/teacher}">Teachers</a></li>
+            <li><a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
 
@@ -36,16 +41,9 @@
     </div>
 </nav>
 <br>
-<div class="sidebar">
-    <a class="active" href="/">Home</a>
-    <a th:href="@{/student}">Students</a>
-    <a th:href="@{/course}">Courses</a>
-    <a th:href="@{/marks}">Markses</a>
-    <a th:href="@{/teacher}" sec:authorize="hasAuthority('TEACHER')">Teachers</a>
-    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
-</div>
+<br>
+<br>
 
-<div class="content">
 
     <div class="panel panel-success">
         <div class="panel heading">Lest of students</div>
@@ -56,7 +54,6 @@
                 <li class="active"><a data-toggle="tab" href="#home">Profile</a></li>
                 <li><a data-toggle="tab" href="#menu1">Classes</a></li>
                 <li><a data-toggle="tab" href="#menu2">Grading</a></li>
-                <li><a data-toggle="tab" href="#menu3">Payment</a></li>
             </ul>
 
             <div class="tab-content">
@@ -115,7 +112,7 @@
                     <br/>
 
                     <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                    <a th:href="@{/update(id=${student.studentId})}"><input type="button" class="form-control btn btn-primary" value="Edit student"></span></a>
+                    <a th:href="@{/update(id=${student.studentId})}"><input type="button" class="form-control btn btn-success" value="Edit student"></span></a>
                     </div>
 
                     </div>
@@ -137,14 +134,12 @@
                                 <td th:text="${s.marksId}" > </td>
                                 <td th:text="${s.cs.courseId}" > </td>
                                 <td th:text="${s.cs.courseName}" > </td>
-                                <td><a th:href="@{/updateMarks(id=${s.marksId})}">edit marks</a></td>
+                                <td><a th:href="@{/updateMarks(id=${s.marksId})}"><span class=" btn-link">Edit Marks</span></a></td>
                             </tr>
                         </table>
 
                     </div>
-                    <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                        <a th:href="@{/update(id=${student.studentId})}"><input type="button" class="form-control btn btn-primary" value="Edit student"></span></a>
-                    </div>
+
 
 
                 </div>
@@ -170,26 +165,19 @@
                                 <td th:text="${s.marks1}" > </td>
                                 <td th:text="${s.marks2}" > </td>
                                 <td th:text="${s.grade()}" > </td>
-                                <td><a th:href="@{/updateMarks(id=${s.marksId})}">edit</a></td>
+                                <td><a th:href="@{/updateMarks(id=${s.marksId})}"><span class=" btn-link">Edit</span></a></td>
                             </tr>
                         </table>
 
                     </div>
                 </div>
-                <div id="menu3" class="tab-pane fade">
-                    <div class="col-xs-12">
-                        <select th:field="*{coursesList}" class="form-control">
-                            <option value="default">Select a course</option>
-                            <option th:each="c:${coursesList}" th:value="${c.courseName}"th:text="${c.courseName}"/>
-                        </select>
-                    </div>
-                </div>
+
 
 
         </div>
 
     </div>
 </div>
-</div>
+
 </body>
 </html>

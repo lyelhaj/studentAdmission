@@ -3,7 +3,12 @@ package com.CGS.admission.studentAdmission.entities;
 
 
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +18,24 @@ import java.util.List;
 
 @Table(name="F_STUDENT")
 //@Data @NoArgsConstructor @AllArgsConstructor  @ToString
-public  class Student {
+public  class Student  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "S_ID")
     private Long studentId;
     @Column(name = "FIRST_NAME")
+    @Size(min = 2,max = 20)
     private String firstName;
     @Column(name = "LAST_NAME")
+    @Size(min = 2,max = 20)
     private String lastName;
     @Column(name = "ADRESS")
     private String adress;
     @Column(name = "S_CITY")
     private String city;
+
     @Column(name = "EMAIL")
+    @Email
     private String email;
     @Enumerated(EnumType.ORDINAL)
     private Gender type;

@@ -15,14 +15,19 @@
 </head>
 <body class="body">
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">MCGS</a>
+            <a class="navbar-brand" href="#" style="color:#F1522F">MCGS</a>
         </div>
 
         <ul class="nav navbar-nav">
-
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/student}">Students</a></li>
+            <li><a th:href="@{/course}">Courses</a></li>
+            <li><a th:href="@{/marks}">Marks</a></li>
+            <li><a th:href="@{/teacher}">Teachers</a></li>
+            <li><a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
 
@@ -34,69 +39,79 @@
     </div>
 </nav>
 <br>
-<div class="sidebar">
-    <a class="active" href="/">Home</a>
-    <a th:href="@{/student}">Students</a>
-    <a th:href="@{/course}">Courses</a>
-    <a th:href="@{/marks}">Markses</a>
-    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
-</div>
-<div class="content">
-<div class="container" style="margin-top:10px">
-    <div class="panel panel-primary">
-        <div class="panel-heading">List of students</div>
+<br>
+<br>
 
-        <div class="panel-body">
+    <div class="container" style="margin-top:10px">
+        <div class="panel panel-primary">
+            <div class="panel-primary">Update students</div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+
+                        <div class="panel-body">
+
             <form action="#" th:action="@{/save}" th:object="${student}" method="post">
-                <table class="table">
 
-                    <tr>
-                        <th>First Name</th>
-                        <td><input type="text" th:field="*{firstName}"/></td>
-                    </tr>
-                    <tr>
-                        <th>Last Name</th>
-                        <td><input type="text" th:field="*{lastName}"/></td>
-                    </tr>
-                    <tr>
-                        <th>Adresse</th>
-                        <td><input type="text" th:field="*{adress}"/></td>
-                    </tr>
-                    <tr>
-                        <th>City</th>
-                        <td><input type="text" th:field="*{city}"/></td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td><input type="text" th:field="*{email}"></td>
-                    </tr>
-                    <tr>
-                        <th>Phone number</th>
-                        <td><input type="text" th:field="*{telephone}"></td>
-                    </tr>
 
-                    <tr>
-                        <th>Gender</th>
-                        <td>
-                            <select th:field="*{type}" value="${student.type}">
-                                <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Gender).values()}"
-                                        th:value="${s}" th:text="${s}"></option>
-                            </select></td>
-                    </tr>
-                    <tr>
-                        <th>Date of birth</th>
-                        <td><input th:field="*{dateOfBirth}"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="btn btn-primary" type="submit" value="Save"></td>
-                    </tr>
-                </table>
+
+                <div class="form-group">
+                <label class="control-label" for="fn">First Name</label>
+                    <input id="fn" class="form-control" type="text" th:field="*{firstName}" autofocus="autofocus" required>
+                    <label th:if="${#fields.hasErrors('firstName')}" th:class="error"> First name size error (siz most be between 2 and 20)</label>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="ln">Last Name</label>
+                        <input id="ln" class="form-control" type="text" th:field="*{lastName}" autofocus="autofocus" required>
+                    <label th:if="${#fields.hasErrors('lastName')}" th:class="error"> Last name size error (siz most be between 2 and 20)</label>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="ad">Address</label>
+                    <input id="ad" class="form-control" type="text" th:field="*{adress}" autofocus="autofocus" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="city">City</label>
+                    <input id="city" class="form-control" type="text" th:field="*{city}" autofocus="autofocus" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label" for="email">Email</label>
+                    <input id="email" class="form-control" type="email" th:field="*{email}" autofocus="autofocus" required>
+                    <label th:if="${#fields.hasErrors('email')}" th:class="error">Please enter valid email address</label>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="tel">Phone number</label>
+                    <input id="tel" class="form-control" type="tel" th:field="*{telephone}" autofocus="autofocus" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="gen">Gender</label>
+                    <select id="gen" class="form-control" th:field="*{type}" value="${student.type}">
+                        <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Gender).values()}"
+                                th:value="${s}" th:text="${s}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="dob">Date of birth</label>
+                    <input id="dob" class="form-control" type="date" th:field="*{telephone}" autofocus="autofocus" required>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-success form-control" type="submit" value="Save">
+                </div>
+
             </form>
         </div>
-
+        </div>
+        </div>
     </div>
 </div>
 </div>
-</div>
+
 </body>
 </html>

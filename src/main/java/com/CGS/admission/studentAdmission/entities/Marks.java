@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="F_MARKS")
@@ -19,7 +23,10 @@ public class Marks {
     @Column(name="MARKS_SESSION")
     @Enumerated(EnumType.ORDINAL)
     private Semestre season;
+
+    @NotNull(message = "Marks cannot be empty") @Min(value = 0, message = "The min value is 0") @Max(value = 100, message = "max value is 100")
     private double marks1;
+    @NotNull(message = "Marks cannot be empty") @Min(value = 0, message = "The min value is 0") @Max(value = 100, message = "max value is 100")
     private double marks2;
 
     @ManyToOne

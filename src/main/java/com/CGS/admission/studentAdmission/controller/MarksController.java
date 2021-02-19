@@ -13,11 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -70,8 +72,12 @@ public class MarksController {
 
 	@GetMapping("/updateMarks")
 	public String update(Model md, @RequestParam(name="id") Long id) {
+		List<Student> students=studentService.getall();
+		List<Course> courses=courseService.getAll();
 		Marks marks=marksService.getMarks(id);
 		md.addAttribute("marks",  marks);
+		md.addAttribute("studentList",students);
+		md.addAttribute("courseList",courses);
 
 		return "mupdate";
 	}
@@ -83,8 +89,52 @@ public class MarksController {
 		return "viewmarks";
 	}
 
+	@PostMapping("/updateMarks")
+	public String updateMarks(@Valid @ModelAttribute("marks") Marks marks,BindingResult bindingResult, String kw, @RequestParam Long cId, @RequestParam Long sId, Model md){
+		if( bindingResult.hasErrors()){
+			List<Course> courses=courseService.getAll();
+			List<Student> students=studentService.getall();
+			Student student=studentService.getStudent(sId);
+			Course course=courseService.getCourse(cId);
+			marks.setSt(student);
+			marks.setCs(course);
+			marks.setSeason(Semestre.JANUARY);
+			md.addAttribute(marks);
+			md.addAttribute("courseList",courses);
+			md.addAttribute("studentList",students);
+			return "mupdate";
+		}
+
+		Student st=studentService.getStudent(sId);
+		Course cs=courseService.getCourse(cId);
+		marks.setSt(st);
+		marks.setCs(cs);
+		marksService.addMarks(marks);
+		kw="";
+		Student student=studentService.getStudent(marks.getSt().getStudentId());
+		Course course=courseService.getCourse(marks.getCs().getCourseId());
+
+		emailServiceImp.send(student.getEmail(),"Marks",
+				"Dear "+student.getLastName()+",\n Your final result for "+course.getCourseName()+" Marks "+marks.avarege()+" Grade : "+marks.grade()
+						+" \n Cardially.");
+
+
+		return "redirect:/marks?kw="+kw;
+
+	}
+
 	@PostMapping("/saveMarks")
-	public String save(@ModelAttribute("marks") Marks marks,  String kw, @RequestParam Long cId,@RequestParam Long sId){
+	public String save(@Valid @ModelAttribute("marks") Marks marks,BindingResult bindingResult, String kw, @RequestParam Long cId, @RequestParam Long sId, Model md){
+		if( bindingResult.hasErrors()){
+			List<Course> courses=courseService.getAll();
+			List<Student> students=studentService.getall();
+			marks.setSeason(Semestre.JANUARY);
+			md.addAttribute(marks);
+			md.addAttribute("courseList",courses);
+			md.addAttribute("studentList",students);
+			return "addMarks";
+		}
+
 		Student st=studentService.getStudent(sId);
 		Course cs=courseService.getCourse(cId);
 		marks.setSt(st);
@@ -97,6 +147,8 @@ public class MarksController {
 		emailServiceImp.send(student.getEmail(),"Marks",
 				"Dear "+student.getLastName()+",\n Your final result for "+course.getCourseName()+" Marks "+marks.avarege()+" Grade : "+marks.grade()
 		+" \n Cardially.");
+
+
 		return "redirect:/marks?kw="+kw;
 
 	}

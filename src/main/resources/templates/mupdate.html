@@ -16,14 +16,19 @@
 
 <body class="body">
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">MCGS</a>
+            <a class="navbar-brand" href="#" style="color:#F1522F">MCGS</a>
         </div>
 
         <ul class="nav navbar-nav">
-
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/student}">Students</a></li>
+            <li><a th:href="@{/course}">Courses</a></li>
+            <li><a th:href="@{/marks}">Marks</a></li>
+            <li><a th:href="@{/teacher}">Teachers</a></li>
+            <li><a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
 
@@ -35,63 +40,74 @@
     </div>
 </nav>
 <br>
-<div class="sidebar">
-    <a class="active" href="/">Home</a>
-    <a th:href="@{/student}">Students</a>
-    <a th:href="@{/course}">Courses</a>
-    <a th:href="@{/marks}">Markses</a>
-    <a th:href="@{/teacher}" >Teachers</a>
-    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
-</div>
-<div class="content">
-<div class="container" style="margin-top:10px">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Marks</div>
+<br>
+<br>
 
-        <div class="panel-body">
-            <form action="#" th:action="@{/saveMarks}" th:object="${marks}" method="post">
-                <table class="table">
-                    <tr>
-                        <th>Marks ID</th>
-                        <td><input th:field="*{marksId}" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>Student ID</th>
-                        <td><input type="text" th:field="*{st.studentId}"/></td>
-                    </tr>
-                    <tr>
-                        <th>Course ID</th>
-                        <td><input type="text" th:field="*{cs.courseId}"/></td>
-                    </tr>
-                    <tr>
-                        <th>Session</th>
-                        <td>
+    <div class="container" style="margin-top:10px">
+        <div class="panel panel-primary">
+            <div class="panel-primary">Edit marks</div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
 
-                            <select th:field="*{season}" value="${marks.season}" >
-                                <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Semestre).values()}"
-                                        th:value="${s}" th:text="${s}" ></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Marks1</th>
-                        <td><input type="text" th:field="*{marks1}"/></td>
-                    </tr>
-                    <tr>
-                        <th>Marks2</th>
-                        <td> <input type="text" th:field="*{marks2}"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="btn btn-primary" type="submit" value="Update"></td>
-                    </tr>
-                </table>
+                        <div class="panel-body">
+            <form action="#" th:action="@{/updateMarks}" th:object="${marks}" method="post">
+
+                    <div class="form-group">
+                        <label class="control-label" for="mid">Marks ID</label>
+                        <input id="mid" class="form-control"  type="text" th:field="*{marksId}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="sId">Student</label>
+                        <select id="sId"  class="form-control" name="sId" required>
+                            <option  th:value="${marks.st.studentId}" th:text="${marks.st.studentId+' '+marks.st.firstName+' '+marks.st.lastName}"/>
+                            <option th:each="c:${studentList}" th:value="${c.studentId}"th:text="${c.studentId+' '+c.firstName+' '+c.lastName}"/>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="cId">Course</label>
+                        <select id="cId"  class="form-control" name="cId" required>
+                            <option th:value="${marks.cs.courseId}" th:text="${marks.cs.courseId+' '+marks.cs.courseName}"></option>
+                            <option th:each="c:${courseList}" th:value="${c.courseId}"th:text="${c.courseId+' '+c.courseName}"/>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="session">Session</label>
+                        <select id="session" class="form-control"  th:field="*{season}" value="${marks.season}" >
+                            <option th:each="s : ${T(com.CGS.admission.studentAdmission.entities.Semestre).values()}"
+                                    th:value="${s}" th:text="${s}" ></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="m1">Marks1</label>
+                        <input id="m1" class="form-control"  type="number" th:field="*{marks1}"/>
+                        <label th:if="${#fields.hasErrors('marks1')}" th:class="error"> marks value shold be between 0 to 100</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="m2">Marks2</label>
+                        <input id="m2" class="form-control"  type="number" th:field="*{marks2}"/>
+                        <label th:if="${#fields.hasErrors('marks2')}" th:class="error"> marks value shold be between 0 to 100</label>
+                    </div>
+                <div class="form-group">
+                    <input class="btn btn-success" type="submit" value="Save">
+                </div>
+
+
+
             </form>
         </div>
-
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 
-</div>
+
 </body>
 
 </html>

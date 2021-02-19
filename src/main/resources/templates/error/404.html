@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8">
-    <title>Liste of students</title>
+    <title th:text="${pageTitle}"></title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/style.css" th:href=@{css/style.css}>
     <link rel="stylesheet" href="../static/css/sidebar.css" th:href=@{css/sidebar.css}>
@@ -13,6 +14,7 @@
 
 
 </head>
+
 <body class="body">
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,7 +34,6 @@
         <ul class="nav navbar-nav navbar-right ">
 
             <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"  > <span sec:authentication="principal.firstName"></span></span></span></a></li>
-            <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/login}"><span class="glyphicon glyphicon-log-out"></span> Login</a></li>
             <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
         </ul>
@@ -43,17 +44,12 @@
 <br>
 <br>
 
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
 
-    <h1>Welcome to student grading system </h1>
-    <p> This web application is created to manage college student grading in which we can add students, courses and marks.
-    the system also manage student and courses teachers, so teachers have access to update their information and manage their
-    student's results </p>
-    <p>User authentication is required <a th:href="@{/login}"><span class="btn-link"> login</span></a></p>
 
+    <div class="m-3">
+        <h1>Sorry, we are not able to find this page </h1>
     </div>
-</div>
+
 
 </body>
 </html>

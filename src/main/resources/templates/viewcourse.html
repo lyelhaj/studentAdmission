@@ -12,143 +12,145 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
-
 </head>
 <body class="body">
 
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">MCGS</a>
+            <a class="navbar-brand" href="#" style="color:#F1522F">MCGS</a>
         </div>
 
         <ul class="nav navbar-nav">
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/student}">Students</a></li>
+            <li><a th:href="@{/course}">Courses</a></li>
+            <li><a th:href="@{/marks}">Marks</a></li>
+            <li><a th:href="@{/teacher}">Teachers</a></li>
+            <li><a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a></li>
+        </ul>
 
         </ul>
         <ul class="nav navbar-nav navbar-right ">
 
-            <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"  > <span sec:authentication="principal.firstName"></span></span></span></a></li>
-            <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#"> <span class="glyphicon glyphicon-user"> <span
+                    sec:authentication="principal.firstName"></span></span></span></a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><span
+                    class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
         </ul>
 
     </div>
 </nav>
 <br>
-<div class="sidebar">
-    <a class="active" href="/">Home</a>
-    <a th:href="@{/student}">Students</a>
-    <a th:href="@{/course}">Courses</a>
-    <a th:href="@{/marks}">Markses</a>
-    <a th:href="@{/teacher}" sec:authorize="hasAuthority('TEACHER')">Teachers</a>
-    <a th:href="@{/registration}" sec:authorize="hasAuthority('ADMIN')">Add user</a>
-</div>
+<br>
+<br>
 
-<div class="content">
 
-    <div class="panel panel-success">
-        <div class="panel heading">Course details</div>
+<div class="panel panel-success">
+    <div class="panel heading">Course details</div>
 
-        <div class="panel-body">
+    <div class="panel-body">
 
-            <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs">
 
-                <li class="active"><a data-toggle="tab" href="#home">Course</a></li>
-                <li><a data-toggle="tab" href="#menu1">Teacher</a></li>
+            <li class="active"><a data-toggle="tab" href="#home">Course</a></li>
+            <li><a data-toggle="tab" href="#menu1">Teacher</a></li>
 
-            </ul>
+        </ul>
 
-            <div class="tab-content">
+        <div class="tab-content">
 
-                <div id="home" class="tab-pane fade in active">
-                    <div class="col-xs-3">
-                        <label class="control-label" for="csId"> ID </label>
-                        <span class="form-control" id="csId"  th:text="*{course.courseId}"  ></span>
+            <div id="home" class="tab-pane fade in active">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="form-group">
+
+                                    <label class="control-label" for="csId"> ID </label>
+                                    <span class="form-control" id="csId" th:text="*{course.courseId}"></span>
+
+
+
+                                    <label class="control-label" for="name"> Name </label>
+                                    <span class="form-control" id="name" th:text="*{course.courseName}"></span>
+
+
+
+                                    <label class="control-label" for="Credit"> Credit </label>
+                                    <span class="form-control" id="Credit" th:text="*{course.creditNumber}"></span>
+
+
+
+                                    <label class="control-label" for="year"> Year </label>
+                                    <span class="form-control" id="year" th:text="*{course.year}"></span>
+
+
+
+
+
+                            </div>
+                            <div class="form-group">
+                                <a th:href="@{/updateCourse(id=${course.courseId})}"><input type="button"
+                                                                                            class="form-control btn btn-success"
+                                                                                            value="Edit"></span></a>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="name"> Name </label>
-                        <span class="form-control" id="name"  th:text="*{course.courseName}"  ></span>
-                    </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="Credit"> Credit </label>
-                        <span class="form-control" id="Credit"  th:text="*{course.creditNumber}"  ></span>
-                    </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="year"> Year </label>
-                        <span class="form-control" id="year"  th:text="*{course.year}"  ></span>
-                    </div>
-
-                <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                    <a th:href="@{/updateCourse(id=${course.courseId})}"><input type="button" class="form-control btn btn-primary" value="Edit student"></span></a>
                 </div>
-                </div>
+            </div>
+
+            <div id="menu1" class="tab-pane fade">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+
+                            <div class="form-group">
+                                <label class="control-label" for="id"> Teacher ID </label>
+                                <span class="form-control" id="id" th:text="*{course.teacher.id}"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="firstName"> First Name </label>
+                                <span class="form-control" id="firstName" th:text="*{course.teacher.firstName}"></span>
+                                <label class="control-label" for="lastName"> Last Name </label>
+                                <span class="form-control" id="lastName" th:text="*{course.teacher.lastName}"></span>
+                                <label class="control-label" for="address"> Address </label>
+                                <span id="address" class="form-control" th:text="*{course.teacher.address}"></span>
+                                <label class="control-label" for="city"> City </label>
+                                <span id="city" class="form-control" th:text="*{course.teacher.city}"></span>
+                                <label class="control-label" for="country"> Country </label>
+                                <span type="tel" id="country" class="form-control"
+                                      th:text="*{course.teacher.country}"></span>
+                                <label class="control-label" for="tel"> Phone number </label>
+                                <span type="tel" id="tel" class="form-control"
+                                      th:text="*{course.teacher.phoneNumber}"></span>
+                                <label class="control-label" for="salary"> Salary </label>
+                                <span type="tel" id="salary" class="form-control"
+                                      th:text="*{course.teacher.country}"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <a th:href="@{/updateCourse(id=${course.courseId},)}"><input type="button"
+                                                                                               class="form-control btn btn-success"
+                                                                                               value="Edit teacher">
+                                </a>
+                            </div>
 
 
+                        </div>
 
-
-                <div id="menu1" class="tab-pane fade">
-
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="id"> Teacher ID :</label>
-                        <span class="form-control" id="id"  th:text="*{course.teacher.id}"  ></span>
-                    </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="firstName"> First Name </label>
-                        <span class="form-control" id="firstName"  th:text="*{course.teacher.firstName}"  ></span>
-                    </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="lastName"> Last Name </label>
-                        <span  class="form-control" id="lastName" th:text="*{course.teacher.lastName}" ></span>
-                    </div>
-
-                    <div class="col-xs-6">
-                        <label class="control-label" for="address"> Address </label>
-                        <span id="address" class="form-control" th:text="*{course.teacher.address}" ></span>
-                    </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="city"> City </label>
-                        <span id="city" class="form-control" th:text="*{course.teacher.city}" ></span>
-                    </div>
-                    <br/>
-                    <div class="col-xs-3">
-                        <label class="control-label" for="country"> Country </label>
-                        <span type="tel" id="country" class="form-control" th:text="*{course.teacher.country}" ></span>
-
-                    </div>
-
-                    <div class="col-xs-3">
-                        <label class="control-label" for="tel"> Phone number </label>
-                        <span type="tel" id="tel" class="form-control" th:text="*{course.teacher.phoneNumber}" ></span>
-
-                    </div>
-                    <div class="col-xs-3">
-                        <label class="control-label" for="salary"> Salary </label>
-                        <span type="tel" id="salary" class="form-control" th:text="*{course.teacher.country}" ></span>
 
                     </div>
-
-                    <div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
-                        <a th:href="@{/updateTeacher(id=${course.teacher.id})}"><input type="button" class="form-control btn btn-primary" value="Edit teacher"></span></a>
-                    </div>
-
 
                 </div>
-
-
-
-
             </div>
 
         </div>
+
     </div>
 </div>
+
 </body>
 </html>

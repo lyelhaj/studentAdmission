@@ -16,3 +16,4 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 	public Page<Course> findByCourseNameContains(String kw,Pageable pageable) ;
 	public List<Course> findByTeacherId(Long id);
 }
+

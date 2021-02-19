@@ -15,10 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +55,16 @@ public class TeacherController {
     @GetMapping("/updateteacher")
     public String update(Model md, @RequestParam(name="id") Long id) {
         Teacher teacher=teacherService.getTeacher(id);
-        md.addAttribute("student",  teacher);
+        md.addAttribute("teacher",  teacher);
+
+        return "tupdate";
+
+    }
+
+    @GetMapping("/tupdate")
+    public String tupdate(Model md, @RequestParam(name="id") Long id) {
+        Teacher teacher=teacherService.getTeacher(id);
+        md.addAttribute("teacher",  teacher);
 
         return "tupdate";
 
@@ -101,7 +107,8 @@ public class TeacherController {
 
     @PostMapping("/tsave")
     public String saveGrading(@ModelAttribute Marks marks,@RequestParam Long id){
+
 marksService.addMarks(marks);
-        return "redirect:/viewteacher?id="+id;
+        return "redirect:/viewTeacher?id="+id;
     }
 }
